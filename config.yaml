@@ -2,6 +2,8 @@ name: "web_app"
 mode: "dev"
 port: 8081
 version: "v1.0.0"
+start_time: "2020-07-01"
+machine_id: 1
 
 log:
   level: "debug"
@@ -14,7 +16,7 @@ mysql:
   port: 3306
   user: "root"
   password: "root"
-  dbname: "sql_demo"
+  dbname: "bluebell"
   max_conns: 200
   max_idle_conns: 50
 redis:

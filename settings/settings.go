@@ -13,6 +13,9 @@ type AppConfig struct {
 	Name         string `mapstructure:"name"`
 	Mode         string `mapstructure:"mode"`
 	Port         int    `mapstructure:"port"`
+	Verion       string `mapstructure:"version"`
+	StartTime    string `mapstructure:"start_time"`
+	MachineID    int64  `mapstructure:"machine_id"`
 	*LogConfig   `mapstructure:"log"`
 	*MySQLConfig `mapstructure:"mysql"`
 	*RedisConfig `mapstructure:"redis"`
@@ -44,13 +47,13 @@ type RedisConfig struct {
 	PoolSize int    `mapstructure:"pool_size"`
 }
 
-func Init(filepath string) (err error) {
+func Init() (err error) {
 	// 直接说明哪个文件
-	// viper.SetConfigName("config")
-	// viper.SetConfigType("yaml")
-	// viper.AddConfigPath("./")
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./")
 	// 通过命令行输入来读取配置文件
-	viper.SetConfigFile(filepath)
+	// viper.SetConfigFile()
 	err = viper.ReadInConfig()
 	if err != nil {
 		fmt.Println("viper failed err:", err)
