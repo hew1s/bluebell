@@ -38,6 +38,7 @@ func SignUpHandler(c *gin.Context) {
 	ResponseSuccess(c, nil)
 }
 
+// 处理登录参数校验
 func LoginHandler(c *gin.Context) {
 	// 1.获取请求参数及参数校验
 	p := new(models.ParamLogin)
@@ -53,7 +54,8 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// 2.业务逻辑处理
-	if err := logic.Login(p); err != nil {
+	token,err := logic.Login(p); 
+	if err != nil {
 		zap.L().Error("login user failed err:", zap.Error(err))
 		if errors.Is(err, mysql.ErrorUserNotExist) {
 			ResponseError(c, CodeUserNotExist)
@@ -61,6 +63,8 @@ func LoginHandler(c *gin.Context) {
 		ResponseError(c, CodeInvalidPassword)
 		return
 	}
+	// 拿到token
+
 	// 3.返回响应
-	ResponseSuccess(c, nil)
+	ResponseSuccess(c, token)
 }

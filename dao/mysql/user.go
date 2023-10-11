@@ -5,19 +5,12 @@ import (
 	"crypto/md5"
 	"database/sql"
 	"encoding/hex"
-	"errors"
 )
 
 // 将数据库每一步操作封装成函数
 // logic层需求调用
 
 const secret = "liwenzhou.com"
-
-var (
-	ErrorUserExist       = errors.New("用户已存在")
-	ErrorUserNotExist    = errors.New("用户不存在")
-	ErrorInvalidPassword = errors.New("密码错误")
-)
 
 // 检查用户是否存在
 func CheckUserExist(username string) (err error) {
