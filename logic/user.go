@@ -30,22 +30,27 @@ func SignUp(p *models.ParamSignUp)(err error) {
 }
 
 // 登录业务
-func Login(p *models.ParamLogin)(token string,err error){
+func Login(p *models.ParamLogin)(user *models.User,err error){
 	// 
-	user := &models.User{
+	user = &models.User{
 		Username: p.Username,
 		Password: p.Password,
 	}
 	// 传递出来的是一个user指针，包含user信息
 	if err :=  mysql.Login(user);err != nil{
-		return "",err
+		return nil,err
 	}
 	
 	// 1.将用户的userID与token进行对应存入redis
-	token ,_= jwt.GetToken(user.UserID,user.Username)
-	redis.Login(user.UserID,token)
+	user.Token ,_= jwt.GetToken(user.UserID,user.Username)
+	redis.Login(user.UserID,user.Token)
 	// 2.当重新登陆时就删除旧token插入新token
 	// 3.在token检验中对相应userID的token进行检测
 	// user.UserID 生成JWT
-	return jwt.GetToken(user.UserID,user.Username)
+	token , err := jwt.GetToken(user.UserID,user.Username)
+	if err != nil {
+		
+	}
+	user.Token = token
+	return
 }

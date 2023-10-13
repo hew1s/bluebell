@@ -51,7 +51,7 @@ func Init() (err error) {
 	// 直接说明哪个文件
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./")
+	viper.AddConfigPath("./conf")
 	// 通过命令行输入来读取配置文件
 	// viper.SetConfigFile()
 	err = viper.ReadInConfig()
